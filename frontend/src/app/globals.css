@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --font-serif: var(--font-editorial-serif), "Newsreader", Georgia, serif;
+}
+
+:root {
+  /* Authentic Vintage Newsprint Paper */
+  --background: #f5f1e8;
+  --foreground: #1c1815;
+  --primary: #1c1815;
+  --primary-foreground: #f5f1e8;
+  --secondary: #eae4d8;
+  --secondary-foreground: #2d2621;
+  --muted: #e7dfd1;
+  --muted-foreground: #766d63;
+  --accent: #ded4c3;
+  --accent-foreground: #1c1815;
+  --border: #dcd2c2;
+}
+
+.dark {
+  /* Archival Inked Press Dark Paper */
+  --background: #141210;
+  --foreground: #ede7dc;
+  --primary: #ede7dc;
+  --primary-foreground: #141210;
+  --secondary: #1f1b17;
+  --secondary-foreground: #ede7dc;
+  --muted: #24201c;
+  --muted-foreground: #a69c91;
+  --accent: #2c2621;
+  --accent-foreground: #ede7dc;
+  --border: #2a2520;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  position: relative;
+  min-height: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Authentic Newspaper Grain & Fiber Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.065;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.dark body::before {
+  opacity: 0.085;
+  filter: invert(1);
+}
+
+/* Classic Newspaper Drop Cap */
+.drop-cap:first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 3.6rem;
+  line-height: 0.82;
+  padding-top: 4px;
+  padding-right: 10px;
+  padding-bottom: 2px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+/* Newspaper Headline Double Border utility */
+.border-newspaper-double {
+  border-bottom: 3px double var(--border);
+}
+
+.border-newspaper-thick {
+  border-bottom: 4px solid var(--border);
+}
+
+/* Hide scrollbar for Chrome, Safari, Edge and Firefox */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

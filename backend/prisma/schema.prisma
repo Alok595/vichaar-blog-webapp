@@ -1,0 +1,54 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String   @unique
+  password   String
+  department String?
+  role       String   @default("author")
+  avatar     String?  @db.Text
+  bio        String?  @db.Text
+  posts      Post[]
+  likedPosts Post[]   @relation("UserLikes")
+  savedPosts Post[]   @relation("UserSaves")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Post {
+  id              Int      @id @default(autoincrement())
+  title           String
+  subtitle        String?  @db.Text
+  category        String   @default("Engineering")
+  subcategory     String?
+  subcategoryDesc String?  @db.Text
+  bureau          String?
+  issueNo         String?
+  folioPage       String?
+  content         String   @db.LongText
+  summaryPoints   Json?
+  sections        Json?
+  authorId        Int?
+  author          User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorName      String?
+  authorRole      String?
+  authorAvatar    String?  @db.Text
+  imageUrl        String?  @db.Text
+  caption         String?  @db.Text
+  readTime        String?  @default("5 min read")
+  wordCount       String?
+  featured        Boolean  @default(false)
+  published       Boolean  @default(true)
+  likedBy         User[]   @relation("UserLikes")
+  savedBy         User[]   @relation("UserSaves")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
