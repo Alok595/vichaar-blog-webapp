@@ -228,7 +228,7 @@ export function ReadingToolbar({
                 ? "bg-amber-100 dark:bg-amber-950/70 border-amber-400 text-amber-900 dark:text-amber-200 font-bold"
                 : "border-border/80 hover:bg-secondary text-muted-foreground hover:text-foreground"
             }`}
-            title={bookmarked ? "Saved to Reading Ledger" : "Save dispatch"}
+            title={bookmarked ? "Saved to Bookmarks" : "Bookmark article"}
           >
             <Bookmark
               className={`w-3.5 h-3.5 ${bookmarked ? "fill-amber-600 text-amber-600" : ""}`}

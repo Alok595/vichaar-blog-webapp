@@ -206,10 +206,10 @@ export function CategoryRibbon({
                 <Link
                   href="/saved"
                   className="flex items-center gap-1 text-[11px] font-sans font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 hover:opacity-80 p-1 transition-colors"
-                  title="Reading Ledger"
+                  title="Saved Posts"
                 >
                   <Bookmark className="w-3.5 h-3.5 fill-amber-500/20" />
-                  <span>Ledger</span>
+                  <span>Saved</span>
                 </Link>
 
                 <button

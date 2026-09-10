@@ -75,9 +75,9 @@ export function MobileMenu({
           </div>
         )}
 
-        {/* Primary Action Buttons (Reading Ledger, Author Desk, Search, Theme) */}
+        {/* Primary Action Buttons (Saved Posts, Author Desk, Search, Theme) */}
         <div className="grid grid-cols-2 gap-2">
-          {/* Reading Ledger Link */}
+          {/* Saved Posts Link */}
           <Link
             href={mounted && isAuthenticated ? "/saved" : "/login"}
             onClick={onClose}
@@ -86,7 +86,7 @@ export function MobileMenu({
             <Bookmark className="w-4 h-4 fill-amber-600/30 text-amber-700 dark:text-amber-400 shrink-0" />
             <div className="text-left">
               <span className="block text-[11px] font-sans font-bold uppercase tracking-wider leading-none">
-                Reading Ledger
+                Saved Posts
               </span>
               <span className="block text-[9px] font-serif italic text-amber-800/80 dark:text-amber-300/80 mt-0.5">
                 सहेजे गए लेख

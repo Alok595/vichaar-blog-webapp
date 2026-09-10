@@ -44,7 +44,7 @@ function parsePostSectionsAndSummary(post) {
       summaryPoints = [
         "A rigorous inquiry into computational craft and contemporary editorial thought.",
         "Synthesizing principles of architecture, typography, and enduring systems.",
-        "Published under the accredited Vichaar Syndicate author ledger.",
+        "Published under the accredited Vichaar Syndicate editorial archives.",
       ];
     }
   }

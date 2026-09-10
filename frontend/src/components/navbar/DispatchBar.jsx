@@ -45,10 +45,10 @@ export function DispatchBar({
             <Link
               href="/saved"
               className="flex items-center gap-1.5 hover:text-amber-300 transition-colors cursor-pointer text-amber-200"
-              title="View your saved dispatches"
+              title="View your saved posts"
             >
               <Bookmark className="w-3.5 h-3.5 fill-amber-300/30 text-amber-300" />
-              <span className="hidden sm:inline">Reading Ledger</span>
+              <span className="hidden sm:inline">Saved Posts</span>
             </Link>
           )}
 

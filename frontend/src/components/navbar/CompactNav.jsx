@@ -49,7 +49,7 @@ export function CompactNav({
             <Link
               href="/saved"
               className="p-1.5 rounded hover:bg-secondary text-amber-800 dark:text-amber-300 hover:text-foreground transition-colors cursor-pointer"
-              title="Reading Ledger (Saved Posts)"
+              title="Saved Posts"
             >
               <Bookmark className="w-3.5 h-3.5 fill-amber-500/20" />
             </Link>

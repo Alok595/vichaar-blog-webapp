@@ -79,10 +79,10 @@ export default function SavedPostsPage() {
           <BookOpen className="w-6 h-6" />
         </div>
         <h1 className="font-serif text-3xl md:text-5xl font-black text-foreground tracking-tight mb-3">
-          Reading Ledger
+          Saved Posts
         </h1>
         <p className="font-serif italic text-muted-foreground max-w-lg mx-auto">
-          A personal archival collection of your saved dispatches, essays, and inquiries.
+          Your personal collection of bookmarked articles, essays, and stories.
         </p>
       </div>
 
@@ -92,10 +92,10 @@ export default function SavedPostsPage() {
             <Bookmark className="w-5 h-5" />
           </div>
           <h3 className="font-serif text-2xl font-bold text-foreground">
-            Your Ledger is Empty
+            No Saved Posts Yet
           </h3>
           <p className="font-serif text-sm text-muted-foreground leading-relaxed">
-            You haven't saved any dispatches yet. While reading any article, click the "Save" button in the reading toolbar to add it to your personal ledger.
+            You haven't bookmarked any articles yet. While reading any post, click the "Save" button to keep it in your saved list.
           </p>
           <div className="pt-4">
             <Link

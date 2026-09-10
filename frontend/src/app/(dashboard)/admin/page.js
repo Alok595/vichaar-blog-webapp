@@ -577,7 +577,7 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen flex items-center justify-center p-8 bg-background">
         <div className="font-serif italic text-muted-foreground animate-pulse">
-          Opening Author Bureau Ledger...
+          Opening Author Writing Studio...
         </div>
       </div>
     );
@@ -1408,7 +1408,7 @@ export default function AdminPage() {
               </div>
               <div>
                 <div className="text-[10px] font-sans font-bold uppercase tracking-wider text-muted-foreground">
-                  Ledger Saves & Bookmarks
+                  Total Saved Bookmarks
                 </div>
                 <div className="font-serif font-bold text-2xl text-foreground">
                   {myPosts.reduce(

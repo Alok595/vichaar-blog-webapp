@@ -224,7 +224,7 @@ export function ArticleContent({ post, fontSize }) {
           [ &#9632; VICHAAR DISPATCH CONCLUDED &#9632; ]
         </div>
         <p className="font-serif italic text-xs text-muted-foreground">
-          Filed under the {post.category} Ledger &bull; New Delhi Central Archives &bull; {post.date}
+          Filed under {post.category} Archives &bull; New Delhi Central Press &bull; {post.date}
         </p>
       </div>
 
