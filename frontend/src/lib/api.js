@@ -33,7 +33,7 @@ async function request(endpoint, options = {}) {
 
     return data;
   } catch (err) {
-    console.error(`[API Error] ${options.method || "GET"} ${endpoint}:`, err);
+    // Re-throw to be handled by component state (prevents Next.js dev overlay on console.error)
     throw err;
   }
 }

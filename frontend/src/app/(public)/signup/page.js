@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTheme } from "next-themes";
@@ -45,11 +46,14 @@ export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showWantedPoster, setShowWantedPoster] = useState(false);
+  const [shakeKey, setShakeKey] = useState(0);
 
   const handleDemoSignInFill = (demoEmail, demoName, demoRole) => {
     setEmail(demoEmail);
     setPassword("author-pass-2026");
     setErrorMessage("");
+    setShowWantedPoster(false);
   };
 
   const handleDemoSignUpFill = (demoName, demoDept, demoEmail) => {
@@ -59,24 +63,32 @@ export default function SignUpPage() {
     setPassword("passkey-fellow-2026");
     setAcceptedCharter(true);
     setErrorMessage("");
+    setShowWantedPoster(false);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
+    setShowWantedPoster(false);
 
     if (!email || !password) {
       setErrorMessage("Please furnish both contributor email and access passkey.");
+      setShowWantedPoster(true);
+      setShakeKey((prev) => prev + 1);
       return;
     }
 
     if (isSignUp && !fullName.trim()) {
       setErrorMessage("Please furnish your full author name for the byline.");
+      setShowWantedPoster(true);
+      setShakeKey((prev) => prev + 1);
       return;
     }
 
     if (isSignUp && !acceptedCharter) {
       setErrorMessage("Please accept the Vichaar Editorial Charter before enrolling.");
+      setShowWantedPoster(true);
+      setShakeKey((prev) => prev + 1);
       return;
     }
 
@@ -111,8 +123,10 @@ export default function SignUpPage() {
         router.push("/admin");
       }, 700);
     } catch (err) {
-      console.error("Auth error:", err);
-      setErrorMessage(err.message || "Authentication failed. Please verify credentials.");
+      const errMsg = err?.message || "Registration failed. Please check your details.";
+      setErrorMessage(errMsg);
+      setShowWantedPoster(true);
+      setShakeKey((prev) => prev + 1);
     } finally {
       setIsLoading(false);
     }
@@ -296,10 +310,91 @@ export default function SignUpPage() {
             </div>
           )}
 
-          {/* Error Banner */}
-          {errorMessage && (
-            <div className="mb-5 p-3.5 bg-red-50 dark:bg-red-950/40 border border-red-600 text-red-900 dark:text-red-200 text-xs font-serif animate-in fade-in">
-              <span>{errorMessage}</span>
+          {/* Hilarious Wanted Monkey Poster Animation for Registration / Passkey Errors */}
+          {showWantedPoster && (
+            <div
+              key={shakeKey}
+              className="mb-6 p-4 sm:p-5 bg-[#fff8e7] dark:bg-[#201a14] border-3 border-stone-900 dark:border-amber-400/90 shadow-[6px_6px_0px_0px_rgba(180,40,20,0.9)] dark:shadow-[6px_6px_0px_0px_rgba(251,191,36,0.3)] relative animate-in zoom-in-95 duration-200 text-center"
+              style={{
+                animation: "wantedShake 0.5s cubic-bezier(.36,.07,.19,.97) both",
+              }}
+            >
+              <style>{`
+                @keyframes wantedShake {
+                  10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-1deg); }
+                  20%, 80% { transform: translate3d(3px, 0, 0) rotate(1.5deg); }
+                  30%, 50%, 70% { transform: translate3d(-4px, 0, 0) rotate(-2deg); }
+                  40%, 60% { transform: translate3d(4px, 0, 0) rotate(2deg); }
+                }
+              `}</style>
+
+              {/* Dismiss X button */}
+              <button
+                type="button"
+                onClick={() => setShowWantedPoster(false)}
+                className="absolute top-2 right-2 text-stone-700 dark:text-stone-300 hover:text-red-700 font-sans font-black text-sm p-1 cursor-pointer"
+                title="Dismiss"
+              >
+                &times;
+              </button>
+
+              {/* Wanted Header */}
+              <div className="text-[10px] font-sans font-black uppercase tracking-[0.25em] text-red-700 dark:text-red-400 border-b-2 border-stone-900 dark:border-amber-400/80 pb-1 mb-2.5">
+                ★ ★ ★ WANTED BY BUREAU POLICE ★ ★ ★
+              </div>
+
+              <h3 className="font-serif font-black text-2xl sm:text-3xl text-stone-900 dark:text-amber-100 tracking-tight leading-none mb-3 uppercase">
+                WANTED: ENROLLMENT ERROR!
+              </h3>
+
+              {/* Authentic Vintage Newspaper Monkey Mugshot Plate */}
+              <div className="relative mx-auto w-40 h-40 border-2 border-stone-900 dark:border-stone-200 bg-stone-100 dark:bg-stone-900 p-1 mb-3 shadow-[4px_4px_0px_0px_rgba(28,24,21,0.85)] dark:shadow-[4px_4px_0px_0px_rgba(251,191,36,0.3)] overflow-hidden">
+                {/* Rubber Stamp */}
+                <div className="absolute top-1 right-1 px-2 py-0.5 bg-red-700 text-white font-sans font-black text-[9px] uppercase tracking-wider -rotate-12 shadow-xs border border-white/50 z-20 animate-pulse">
+                  ALERT! 🚨
+                </div>
+
+                {/* Newspaper Woodcut Engraving Image */}
+                <div className="relative w-full h-full overflow-hidden bg-[#e8dec8]">
+                  <Image
+                    src="/wanted_monkey.jpg"
+                    alt="Wanted Monkey Registration Error"
+                    fill
+                    className="object-cover contrast-125 grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </div>
+              </div>
+
+              <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-stone-700 dark:text-stone-300 mb-2">
+                EVIDENCE EXHIBIT &bull; MUGSHOT #9413-B
+              </div>
+
+              {/* Funny Warning Text */}
+              <div className="space-y-1.5 mb-3">
+                <div className="font-sans font-black text-xs uppercase tracking-wider text-red-800 dark:text-red-300">
+                  🚨 CAUGHT YA! {errorMessage || "SOMETHING IS WRONG WITH YOUR DETAILS!"} 🚨
+                </div>
+                <p className="font-serif text-xs text-stone-800 dark:text-stone-300 leading-relaxed max-w-sm mx-auto">
+                  The Bureau&apos;s security monkeys stopped this dispatch. Please verify your author byline, email, and passkey!
+                </p>
+                <p className="font-serif italic text-[11px] text-stone-600 dark:text-stone-400">
+                  Did a monkey scramble your keyboard? 🍌 Please double check your entries.
+                </p>
+              </div>
+
+              {/* Reward Banner */}
+              <div className="py-1 px-3 bg-amber-200 dark:bg-amber-950/80 border border-amber-600/60 dark:border-amber-500/40 text-[10px] font-sans font-black uppercase tracking-widest text-amber-950 dark:text-amber-200 mb-3 flex items-center justify-center gap-1.5">
+                <span>🍌 REWARD: 10,000 BANANAS FOR ACCREDITED FELLOWS 🍌</span>
+              </div>
+
+              {/* Dismiss / Retry Button */}
+              <button
+                type="button"
+                onClick={() => setShowWantedPoster(false)}
+                className="w-full py-1.5 px-3 bg-stone-900 dark:bg-amber-400 text-amber-200 dark:text-stone-950 hover:bg-red-800 hover:text-white dark:hover:bg-amber-300 transition-colors font-sans text-[10px] font-extrabold uppercase tracking-widest cursor-pointer shadow-xs"
+              >
+                [ 🍌 I WILL FIX IT — TRY AGAIN ]
+              </button>
             </div>
           )}
 

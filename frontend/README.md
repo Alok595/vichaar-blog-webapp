@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Vichaar Editorial Broadsheet (Frontend)
 
-## Getting Started
+Welcome to the frontend application for **Vichaar**, a beautifully crafted, vintage newspaper-themed editorial web application. This project reimagines the modern digital blog as an authentic, 1920s-style broadsheet journal.
 
-First, run the development server:
+## 🗞️ Features & Design
+
+- **Vintage Broadsheet Aesthetics**: Immersive, fully responsive newspaper layout featuring datelines, serif typography, and multi-column editorial grids.
+- **Categorized Sections**: Strict categorization ensuring visitors only see relevant content when browsing specific bureaus (e.g., Engineering, Culture, Games).
+- **Author Desk Portal**: A secure, themed authentication portal for authors to log in and manage their dispatches.
+- **Micro-Interactions & Animations**: Features delightful details, including a custom "Wanted Monkey" interactive error state for failed login attempts.
+- **Dark Edition**: Fully supported dark mode theme ("Late Night Edition") with inverted colors that maintain the authentic paper aesthetic.
+
+## 🚀 Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router) with Turbopack for ultra-fast development.
+- **Styling**: Tailwind CSS combined with custom vintage CSS animations and layouts.
+- **State Management**: Zustand / Context (via `useAuthStore`).
+- **Icons**: Lucide React for crisp, scalable iconography.
+
+## 🛠️ Getting Started
+
+First, ensure your backend server is running on `localhost:5000`.
+
+Then, install the dependencies and run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📁 Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/`: Next.js App Router pages (Front Page, Login, Admin Desk).
+- `src/components/`: Reusable UI components (Newspaper layout elements, Navbars).
+- `src/lib/`: API utilities and authentication state management.
+- `public/`: Static assets, including authentic paper textures and woodcut engravings.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Built with craftsmanship and a dedication to "Depth Over Velocity."*
