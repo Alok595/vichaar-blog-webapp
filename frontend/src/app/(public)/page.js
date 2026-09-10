@@ -79,13 +79,18 @@ export default async function Home(props) {
   const searchParams = await props?.searchParams;
   const selectedCategory = searchParams?.category || "";
   const selectedSubcategory = searchParams?.subcategory || "";
+  const searchQuery = (searchParams?.search || searchParams?.q || "").trim();
 
   let featuredPost = null;
   let secondaryPosts = [];
   let allMappedPosts = [];
 
   try {
-    const res = await fetch(`${API_BASE_URL}/posts`, {
+    const fetchUrl = searchQuery
+      ? `${API_BASE_URL}/posts?search=${encodeURIComponent(searchQuery)}`
+      : `${API_BASE_URL}/posts`;
+
+    const res = await fetch(fetchUrl, {
       cache: "no-store",
     });
     if (res.ok) {
@@ -114,12 +119,24 @@ export default async function Home(props) {
     console.warn("Backend fetch failed, using fallback articles:", e.message);
   }
 
-  if (allMappedPosts.length === 0) {
+  if (allMappedPosts.length === 0 && !searchQuery) {
     allMappedPosts = [fallbackFeaturedPost, ...fallbackSecondaryPosts];
   }
 
-  // Filter posts by category and subcategory if requested in searchParams
+  // Filter posts by search query (client fallback), category, and subcategory
   let filteredPosts = allMappedPosts;
+
+  if (searchQuery) {
+    const qLower = searchQuery.toLowerCase();
+    filteredPosts = filteredPosts.filter((p) => {
+      const matchTitle = p.title?.toLowerCase().includes(qLower);
+      const matchExcerpt = p.excerpt?.toLowerCase().includes(qLower);
+      const matchCategory = p.category?.toLowerCase().includes(qLower);
+      const matchAuthor = p.author?.toLowerCase().includes(qLower);
+      return matchTitle || matchExcerpt || matchCategory || matchAuthor;
+    });
+  }
+
   if (selectedCategory) {
     filteredPosts = filteredPosts.filter((p) => {
       if (!p.category) return false;
@@ -144,7 +161,11 @@ export default async function Home(props) {
       {/* Front Page Broadsheet Banner */}
       <div className="border-b-2 border-foreground/80 dark:border-border pb-1.5 mb-6 flex items-center justify-between text-[11px] font-sans uppercase tracking-[0.25em] font-extrabold text-foreground">
         <span>
-          {selectedCategory ? `${selectedCategory.toUpperCase()}${selectedSubcategory ? ` › ${selectedSubcategory.toUpperCase()}` : ""} • SECTION ARCHIVE` : "The Front Page • Lead Inquiries"}
+          {searchQuery
+            ? `SEARCH ARCHIVES • QUERY: “${searchQuery.toUpperCase()}”`
+            : selectedCategory
+            ? `${selectedCategory.toUpperCase()}${selectedSubcategory ? ` › ${selectedSubcategory.toUpperCase()}` : ""} • SECTION ARCHIVE`
+            : "The Front Page • Lead Inquiries"}
         </span>
         <span className="hidden sm:inline font-serif italic font-normal normal-case text-muted-foreground">
           Transmitted via digital telegraph &bull; Edition of Record
@@ -152,22 +173,24 @@ export default async function Home(props) {
         <span>Section 1 &bull; Folio A</span>
       </div>
 
-      {/* Category / Subcategory Filter Indicator Banner */}
-      {(selectedCategory || selectedSubcategory) && (
+      {/* Search / Category Filter Indicator Banner */}
+      {(searchQuery || selectedCategory || selectedSubcategory) && (
         <div className="mb-8 p-3.5 bg-secondary/35 border-2 border-foreground/90 dark:border-border shadow-[3px_3px_0px_0px_rgba(28,24,21,0.8)] dark:shadow-[3px_3px_0px_0px_rgba(237,231,220,0.2)] flex flex-wrap items-center justify-between gap-3 animate-in fade-in duration-150">
           <div className="flex items-center gap-2.5">
             <span className="text-[10px] font-sans font-black uppercase tracking-widest bg-foreground text-background px-2 py-0.5 rounded-2xs">
-              {selectedSubcategory ? "Subcategory Desk" : "Department Folio"}
+              {searchQuery ? "Search Query" : selectedSubcategory ? "Subcategory Desk" : "Department Folio"}
             </span>
             <span className="font-serif font-bold text-sm sm:text-base text-foreground">
-              Showing dispatches under &ldquo;{selectedCategory}{selectedSubcategory ? ` › ${selectedSubcategory}` : ""}&rdquo; ({filteredPosts.length} {filteredPosts.length === 1 ? "inquiry" : "inquiries"} found)
+              {searchQuery
+                ? `Search results for “${searchQuery}” (${filteredPosts.length} ${filteredPosts.length === 1 ? "inquiry" : "inquiries"} found)`
+                : `Showing dispatches under “${selectedCategory}${selectedSubcategory ? ` › ${selectedSubcategory}` : ""}” (${filteredPosts.length} ${filteredPosts.length === 1 ? "inquiry" : "inquiries"} found)`}
             </span>
           </div>
           <Link
             href="/"
             className="text-xs font-sans uppercase font-bold text-red-700 dark:text-red-400 hover:underline flex items-center gap-1"
           >
-            <span>&times; Clear Filter (View All)</span>
+            <span>&times; Clear Search & Filter</span>
           </Link>
         </div>
       )}
