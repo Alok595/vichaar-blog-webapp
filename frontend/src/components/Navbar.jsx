@@ -210,7 +210,7 @@ export function Navbar() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  if (pathname === "/login") {
+  if (pathname === "/login" || pathname === "/signup") {
     return null;
   }
 
