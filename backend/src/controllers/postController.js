@@ -51,6 +51,12 @@ export const getPosts = async (req, res) => {
               bio: true,
             },
           },
+          _count: {
+            select: {
+              likedBy: true,
+              savedBy: true,
+            },
+          },
         },
       }),
     ]);
@@ -89,6 +95,12 @@ export const getMyPosts = async (req, res) => {
             avatar: true,
             role: true,
             bio: true,
+          },
+        },
+        _count: {
+          select: {
+            likedBy: true,
+            savedBy: true,
           },
         },
       },

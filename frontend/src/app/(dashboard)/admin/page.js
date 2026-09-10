@@ -30,7 +30,11 @@ import {
   ArrowUp,
   ArrowDown,
   Layers,
-  GripVertical
+  GripVertical,
+  Heart,
+  Bookmark,
+  BarChart3,
+  TrendingUp,
 } from "lucide-react";
 import { useAuthStore } from "@/lib/authStore";
 import { api } from "@/lib/api";
@@ -1364,7 +1368,57 @@ export default function AdminPage() {
 
       {/* TAB 2: MY ISOLATED DISPATCHES */}
       {activeTab === "my-posts" && (
-        <div className="space-y-4 animate-in fade-in">
+        <div className="space-y-6 animate-in fade-in">
+          {/* Aggregate Editorial Metrics Bar */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="p-4 border border-border bg-background shadow-xs flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-sm bg-amber-100 dark:bg-amber-950/70 border border-amber-300 dark:border-amber-800 flex items-center justify-center text-amber-900 dark:text-amber-200">
+                <FileText className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="text-[10px] font-sans font-bold uppercase tracking-wider text-muted-foreground">
+                  Syndicated Dispatches
+                </div>
+                <div className="font-serif font-bold text-2xl text-foreground">
+                  {myPosts.length}
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border border-border bg-background shadow-xs flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-sm bg-red-100 dark:bg-red-950/70 border border-red-300 dark:border-red-800 flex items-center justify-center text-red-700 dark:text-red-400">
+                <Heart className="w-5 h-5 fill-red-600/30 text-red-600" />
+              </div>
+              <div>
+                <div className="text-[10px] font-sans font-bold uppercase tracking-wider text-muted-foreground">
+                  Total Reader Applauds
+                </div>
+                <div className="font-serif font-bold text-2xl text-foreground">
+                  {myPosts.reduce(
+                    (acc, p) => acc + (p._count?.likedBy || p.likesCount || 0),
+                    0
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border border-border bg-background shadow-xs flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-sm bg-amber-100 dark:bg-amber-950/70 border border-amber-300 dark:border-amber-800 flex items-center justify-center text-amber-800 dark:text-amber-300">
+                <Bookmark className="w-5 h-5 fill-amber-500/30 text-amber-600" />
+              </div>
+              <div>
+                <div className="text-[10px] font-sans font-bold uppercase tracking-wider text-muted-foreground">
+                  Ledger Saves & Bookmarks
+                </div>
+                <div className="font-serif font-bold text-2xl text-foreground">
+                  {myPosts.reduce(
+                    (acc, p) => acc + (p._count?.savedBy || p.savesCount || 0),
+                    0
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
 
           {isLoadingPosts ? (
             <div className="py-12 text-center text-muted-foreground font-serif italic">
@@ -1396,7 +1450,7 @@ export default function AdminPage() {
                 >
                   <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                     <div className="space-y-1.5 max-w-2xl">
-                      <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-wider font-extrabold text-amber-800 dark:text-amber-400">
+                      <div className="flex flex-wrap items-center gap-2 text-[10px] font-sans uppercase tracking-wider font-extrabold text-amber-800 dark:text-amber-400">
                         <span>{post.category}</span>
                         <span>&bull;</span>
                         <span className="flex items-center gap-1 text-muted-foreground font-normal">
@@ -1422,6 +1476,19 @@ export default function AdminPage() {
                           {post.subtitle}
                         </p>
                       )}
+
+                      {/* Engagement Counters: Likes & Saves */}
+                      <div className="pt-2 flex items-center gap-3 text-xs font-sans">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-900/60 text-red-700 dark:text-red-400 font-bold text-[11px]">
+                          <Heart className="w-3.5 h-3.5 fill-red-600 text-red-600" />
+                          <span>{post._count?.likedBy ?? post.likesCount ?? 0} Likes</span>
+                        </span>
+
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/60 text-amber-800 dark:text-amber-300 font-bold text-[11px]">
+                          <Bookmark className="w-3.5 h-3.5 fill-amber-600 text-amber-600" />
+                          <span>{post._count?.savedBy ?? post.savesCount ?? 0} Saves</span>
+                        </span>
+                      </div>
                     </div>
 
                     {/* Author Actions: Edit / Delete / View */}
