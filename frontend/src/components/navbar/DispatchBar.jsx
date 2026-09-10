@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, PenLine, Sun, Moon, Bookmark } from "lucide-react";
+import { Search, PenLine, Sun, Moon, Bookmark, Maximize2, Minimize2 } from "lucide-react";
 import { useAuthStore } from "@/lib/authStore";
 
 export function DispatchBar({
@@ -63,6 +63,23 @@ export function DispatchBar({
                 : "Submit Essay"}
             </span>
           </Link>
+
+          {/* Fullscreen Zen Reader Toggle */}
+          <button
+            onClick={toggleFullscreen}
+            className="p-1 rounded hover:bg-white/10 transition-colors cursor-pointer text-stone-200 hidden sm:flex items-center gap-1"
+            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Reading Mode"}
+            aria-label="Toggle fullscreen mode"
+          >
+            {isFullscreen ? (
+              <Minimize2 className="h-3.5 w-3.5 text-amber-300" />
+            ) : (
+              <Maximize2 className="h-3.5 w-3.5 text-stone-200" />
+            )}
+            <span className="text-[10px] hidden md:inline">
+              {isFullscreen ? "Exit Full" : "Full Screen"}
+            </span>
+          </button>
 
           {/* Theme Toggle */}
           <button

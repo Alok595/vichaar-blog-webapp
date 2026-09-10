@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, PenLine, Sun, Moon, Menu, X, Bookmark } from "lucide-react";
+import { Search, PenLine, Sun, Moon, Menu, X, Bookmark, Maximize2, Minimize2 } from "lucide-react";
 import { useAuthStore } from "@/lib/authStore";
 
 export function CompactNav({
@@ -63,7 +63,19 @@ export function CompactNav({
             <span>{mounted && isAuthenticated && user ? `Desk` : "Write"}</span>
           </Link>
 
-
+          {/* Fullscreen Reading Mode Toggle */}
+          <button
+            onClick={toggleFullscreen}
+            className="p-1.5 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors cursor-pointer hidden sm:flex"
+            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Reading Mode"}
+            aria-label="Toggle fullscreen mode"
+          >
+            {isFullscreen ? (
+              <Minimize2 className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+            ) : (
+              <Maximize2 className="h-3.5 w-3.5" />
+            )}
+          </button>
 
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

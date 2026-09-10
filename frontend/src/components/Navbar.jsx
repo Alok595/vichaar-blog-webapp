@@ -25,7 +25,30 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [expandedMobileCategory, setExpandedMobileCategory] = useState(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const dropdownTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.warn("Fullscreen request error:", err);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -200,6 +223,8 @@ export function Navbar() {
           theme={theme}
           setTheme={setTheme}
           onOpenSearch={() => setSearchOpen(true)}
+          isFullscreen={isFullscreen}
+          toggleFullscreen={toggleFullscreen}
         />
         <Masthead />
       </div>
@@ -214,6 +239,8 @@ export function Navbar() {
           onOpenSearch={() => setSearchOpen(true)}
           mobileMenuOpen={mobileMenuOpen}
           setMobileMenuOpen={setMobileMenuOpen}
+          isFullscreen={isFullscreen}
+          toggleFullscreen={toggleFullscreen}
         />
         <Suspense fallback={<div className="h-8 bg-background border-b-2 border-newspaper-double" />}>
           <CategoryRibbon

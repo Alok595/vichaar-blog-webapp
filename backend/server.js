@@ -36,26 +36,6 @@ app.use(
 );
 app.use(express.json());
 
-// Root & Welcome Routes
-app.get('/', (req, res) => {
-  res.json({
-    status: 'online',
-    name: 'Vichaar Blog API',
-    endpoints: {
-      health: '/api/health',
-      posts: '/api/posts',
-      auth: '/api/auth'
-    }
-  });
-});
-
-app.get('/api', (req, res) => {
-  res.json({
-    status: 'online',
-    message: 'Welcome to Vichaar Blog WebApp API'
-  });
-});
-
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
