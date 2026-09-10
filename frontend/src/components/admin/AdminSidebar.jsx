@@ -52,15 +52,13 @@ export function AdminSidebar({
 
   return (
     <>
-      {/* ========================================================================= */}
-      {/* 1. DESKTOP FIXED MINIMAL SIDEBAR */}
-      {/* ========================================================================= */}
+
       <aside
         className={`hidden md:flex flex-col h-full shrink-0 border-r border-border/80 bg-background/50 transition-all duration-300 ease-in-out select-none overflow-hidden ${
           sidebarCollapsed ? "w-16" : "w-60"
         }`}
       >
-        {/* Author Badge Section */}
+
         <div className={`p-3.5 border-b border-border/60 shrink-0 ${sidebarCollapsed ? "text-center px-2" : ""}`}>
           {sidebarCollapsed ? (
             <div className="flex justify-center group relative">
@@ -91,9 +89,9 @@ export function AdminSidebar({
           )}
         </div>
 
-        {/* Navigation Middle Section */}
+
         <div className="flex-1 py-4 px-2 space-y-6 overflow-y-auto no-scrollbar">
-          {/* Main Actions */}
+
           <div className="space-y-1">
             {!sidebarCollapsed && (
               <div className="text-[9px] font-sans uppercase tracking-widest font-black text-muted-foreground/70 px-2.5 mb-1.5">
@@ -101,7 +99,7 @@ export function AdminSidebar({
               </div>
             )}
 
-            {/* NEW DISPATCH DRAFT Button */}
+
             <button
               onClick={handleSelectDraft}
               className={`w-full group relative flex items-center gap-2.5 px-2.5 py-2 text-xs font-sans uppercase font-bold tracking-wider transition-colors rounded-xs cursor-pointer ${
@@ -121,7 +119,7 @@ export function AdminSidebar({
               )}
             </button>
 
-            {/* MY DISPATCHES Button */}
+
             <button
               onClick={handleSelectMyPosts}
               className={`w-full group relative flex items-center gap-2.5 px-2.5 py-2 text-xs font-sans uppercase font-bold tracking-wider transition-colors rounded-xs cursor-pointer ${
@@ -154,7 +152,7 @@ export function AdminSidebar({
           </div>
         </div>
 
-        {/* Footer Actions */}
+
         <div className="p-2 border-t border-border/60 space-y-1 bg-background/60 shrink-0">
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -193,7 +191,7 @@ export function AdminSidebar({
             )}
           </button>
 
-          {/* Desktop Collapse/Expand Mini Button */}
+
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             className="w-full pt-1.5 border-t border-border/40 flex items-center justify-center py-1 text-muted-foreground/80 hover:text-foreground transition-colors cursor-pointer"
@@ -211,9 +209,7 @@ export function AdminSidebar({
         </div>
       </aside>
 
-      {/* ========================================================================= */}
-      {/* 2. MOBILE RESPONSIVE DRAWER */}
-      {/* ========================================================================= */}
+
       {mobileSidebarOpen && (
         <div
           className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 md:hidden animate-in fade-in duration-200"

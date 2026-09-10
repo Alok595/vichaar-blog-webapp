@@ -43,9 +43,9 @@ export function AdminNavbar({
   return (
     <header className="w-full h-14 bg-background/95 backdrop-blur-md border-b border-border/80 sticky top-0 z-40 shrink-0">
       <div className="w-full h-full px-4 md:px-6 flex items-center justify-between">
-        {/* LEFT: Sidebar Toggle & Brand */}
+
         <div className="flex items-center gap-3 md:gap-4">
-          {/* Mobile drawer toggle */}
+
           <button
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className="md:hidden p-1.5 text-muted-foreground hover:text-foreground hover:bg-secondary border border-border/70 rounded-xs transition-colors"
@@ -54,7 +54,7 @@ export function AdminNavbar({
             {mobileSidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
 
-          {/* Desktop sidebar toggle button */}
+
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             className="hidden md:flex items-center justify-center p-1.5 text-muted-foreground hover:text-foreground hover:bg-secondary border border-border/70 rounded-xs transition-colors group"
@@ -70,7 +70,7 @@ export function AdminNavbar({
 
           <div className="hidden sm:block h-4 w-[1px] bg-border/80" />
 
-          {/* Clean Brand Logo */}
+
           <Link
             href="/admin"
             className="flex items-center gap-2.5 select-none group"
@@ -89,9 +89,9 @@ export function AdminNavbar({
           </Link>
         </div>
 
-        {/* RIGHT: View Site + Theme Toggle + User Profile */}
+
         <div className="flex items-center gap-2">
-          {/* Public Site Link */}
+
           <Link
             href="/"
             target="_blank"
@@ -103,7 +103,7 @@ export function AdminNavbar({
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
 
-          {/* Theme Toggle Button */}
+
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-secondary border border-transparent hover:border-border/80 rounded-xs transition-colors"
@@ -119,7 +119,7 @@ export function AdminNavbar({
 
           <div className="h-4 w-[1px] bg-border/80 mx-1 hidden sm:block" />
 
-          {/* User Profile Menu */}
+
           {user && (
             <div className="relative" ref={dropdownRef}>
               <button
@@ -144,7 +144,7 @@ export function AdminNavbar({
                 />
               </button>
 
-              {/* Minimal Dropdown Panel */}
+
               {userDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-56 bg-background border border-border shadow-lg py-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150 rounded-xs">
                   <div className="px-3.5 py-2 border-b border-border/80 bg-secondary/20">

@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
-  // Load saved sidebar preference from localStorage
+
   useEffect(() => {
     setMounted(true);
     try {
@@ -45,13 +45,13 @@ export default function DashboardLayout({ children }) {
     return (
       <div className="h-screen w-screen bg-background flex items-center justify-center">
         <div className="font-serif italic text-muted-foreground animate-pulse">
-          Opening Author Bureau Desk...
+          Loading...
         </div>
       </div>
     );
   }
 
-  // If not logged in, render children directly (which displays login gate)
+
   if (!isAuthenticated || !user) {
     return <main className="flex-1 min-h-screen">{children}</main>;
   }
@@ -59,7 +59,7 @@ export default function DashboardLayout({ children }) {
   return (
     <AdminProvider>
       <div className="h-screen w-full bg-background text-foreground flex flex-col overflow-hidden selection:bg-amber-200 selection:text-stone-900 dark:selection:bg-stone-800 dark:selection:text-amber-100">
-        {/* 1. Full-Width Fixed Top Navbar */}
+
         <AdminNavbar
           user={user}
           onLogout={handleLogout}
@@ -69,9 +69,9 @@ export default function DashboardLayout({ children }) {
           setMobileSidebarOpen={setMobileSidebarOpen}
         />
 
-        {/* 2. Workspace Area: Fixed Sidebar + Scrollable Right Content */}
+
         <div className="flex flex-1 w-full h-[calc(100vh-3.5rem)] overflow-hidden">
-          {/* Fixed Collapsible Sidebar */}
+
           <AdminSidebar
             user={user}
             onLogout={handleLogout}
@@ -81,7 +81,7 @@ export default function DashboardLayout({ children }) {
             setMobileSidebarOpen={setMobileSidebarOpen}
           />
 
-          {/* ONLY Right-side scrollable main viewport */}
+
           <main className="flex-1 h-full min-w-0 overflow-y-auto bg-background/60">
             <div className="w-full pb-16">
               {children}
