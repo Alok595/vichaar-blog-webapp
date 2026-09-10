@@ -3,7 +3,6 @@
 import Link from "next/link";
 import {
   ArrowLeft,
-  Printer,
   Share2,
   Bookmark,
   Check,
@@ -29,8 +28,8 @@ export function ReadingToolbar({
   const [likesCount, setLikesCount] = useState(post?._count?.likedBy || 0);
   const [scrollProgress, setScrollProgress] = useState(0);
 
+  // Sync user's like/save state from backend since server component can't read localStorage token
   useEffect(() => {
-    // Sync user's like/save state from backend since server component can't read localStorage token
     if (isAuthenticated && token && post?.id) {
       fetch(`${API_BASE_URL}/posts/${post.id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -40,22 +39,29 @@ export function ReadingToolbar({
           if (data.success && data.post) {
             setLiked(data.post.hasLiked);
             setBookmarked(data.post.hasSaved);
+            if (data.post._count) {
+              setLikesCount(data.post._count.likedBy);
+              setSavesCount(data.post._count.savedBy);
+            }
           }
         })
         .catch((e) => console.error("Failed to sync interactions:", e));
     }
   }, [isAuthenticated, token, post?.id]);
 
+  // Track reading scroll depth
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight =
         document.documentElement.scrollHeight - window.innerHeight;
       if (totalHeight > 0) {
-        const progress = (window.scrollY / totalHeight) * 100;
-        setScrollProgress(Math.min(100, Math.max(0, progress)));
+        const progress = Math.min(
+          100,
+          Math.max(0, (window.scrollY / totalHeight) * 100)
+        );
+        setScrollProgress(progress);
       }
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -83,7 +89,7 @@ export function ReadingToolbar({
       if (res.ok) {
         const data = await res.json();
         setLiked(data.liked);
-        setLikesCount((prev) => (data.liked ? prev + 1 : prev - 1));
+        setLikesCount((prev) => (data.liked ? prev + 1 : Math.max(0, prev - 1)));
       }
     } catch (e) {
       console.error("Failed to toggle like:", e);
@@ -105,15 +111,11 @@ export function ReadingToolbar({
       if (res.ok) {
         const data = await res.json();
         setBookmarked(data.saved);
-        setSavesCount((prev) => (data.saved ? prev + 1 : prev - 1));
+        setSavesCount((prev) => (data.saved ? prev + 1 : Math.max(0, prev - 1)));
       }
     } catch (e) {
       console.error("Failed to toggle bookmark:", e);
     }
-  };
-
-  const handlePrint = () => {
-    window.print();
   };
 
   return (
@@ -181,16 +183,6 @@ export function ReadingToolbar({
               Editorial
             </button>
           </div>
-
-          {/* Print Button */}
-          <button
-            onClick={handlePrint}
-            className="p-1.5 border border-border/80 rounded-xs hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-            title="Print broadsheet dispatch"
-            aria-label="Print article"
-          >
-            <Printer className="w-3.5 h-3.5" />
-          </button>
 
           {/* Share Button */}
           <button
