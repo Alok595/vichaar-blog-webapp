@@ -482,67 +482,67 @@ export default async function Home(props) {
           </div>
         </div>
 
-        {/* Right Sidebar: Curated Numbered Dispatches */}
-        <div className="lg:col-span-4 lg:border-l-2 lg:border-foreground/80 dark:lg:border-border lg:pl-10 space-y-8">
-          <div>
-            <div className="border-b-2 border-foreground pb-2 mb-6 flex items-center justify-between">
-              <h3 className="font-serif text-xl font-bold tracking-tight text-foreground">
-                {selectedCategory ? `${selectedCategory}: Top Read` : "The Folio: Most Read"}
-              </h3>
-              <span className="text-[10px] font-sans font-extrabold uppercase px-1.5 py-0.5 bg-red-700 text-white rounded-xs">
-                Most Liked
-              </span>
-            </div>
+        <div className="lg:col-span-4 lg:border-l-2 lg:border-foreground/80 dark:lg:border-border lg:pl-10">
+          <div className="sticky top-24 space-y-8">
+            <div>
+              <div className="border-b-2 border-foreground pb-2 mb-6 flex items-center justify-between">
+                <h3 className="font-serif text-xl font-bold tracking-tight text-foreground">
+                  {selectedCategory ? `${selectedCategory}: Top Read` : "The Folio: Most Read"}
+                </h3>
+                <span className="text-[10px] font-sans font-extrabold uppercase px-1.5 py-0.5 bg-red-700 text-white rounded-xs">
+                  Most Liked
+                </span>
+              </div>
 
-            <div className="divide-y divide-border/80">
-              {folioItemsToDisplay.map((pick, i) => {
-                const colors = [
-                  "text-red-700 dark:text-red-400",
-                  "text-blue-800 dark:text-blue-400",
-                  "text-amber-800 dark:text-amber-400",
-                  "text-emerald-800 dark:text-emerald-400",
-                ];
-                const tagColors = [
-                  "text-red-800 dark:text-red-300",
-                  "text-blue-800 dark:text-blue-300",
-                  "text-amber-800 dark:text-amber-300",
-                  "text-emerald-800 dark:text-emerald-300",
-                ];
+              <div className="divide-y divide-border/80">
+                {folioItemsToDisplay.map((pick, i) => {
+                  const colors = [
+                    "text-red-700 dark:text-red-400",
+                    "text-blue-800 dark:text-blue-400",
+                    "text-amber-800 dark:text-amber-400",
+                    "text-emerald-800 dark:text-emerald-400",
+                  ];
+                  const tagColors = [
+                    "text-red-800 dark:text-red-300",
+                    "text-blue-800 dark:text-blue-300",
+                    "text-amber-800 dark:text-amber-300",
+                    "text-emerald-800 dark:text-emerald-300",
+                  ];
 
-                return (
-                  <div key={pick.id || pick.num || i} className="py-4.5 group">
-                    <Link
-                      href={pick.id ? `/post/${pick.id}` : "#"}
-                      className="flex items-start gap-4 block"
-                    >
-                      <span className={`font-serif text-3xl font-black ${colors[i % colors.length]} leading-none`}>
-                        {pick.num}
-                      </span>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className={`text-[10px] uppercase tracking-wider font-sans font-bold ${tagColors[i % tagColors.length]}`}>
-                            {pick.category}
-                          </span>
-                          {pick.likesCount > 0 && (
-                            <span className="inline-flex items-center gap-0.5 text-[10px] font-sans font-bold text-red-700 dark:text-red-400">
-                              <Heart className="w-2.5 h-2.5 fill-red-600 text-red-600" />
-                              <span>{pick.likesCount}</span>
+                  return (
+                    <div key={pick.id || pick.num || i} className="py-4.5 group">
+                      <Link
+                        href={pick.id ? `/post/${pick.id}` : "#"}
+                        className="flex items-start gap-4 block"
+                      >
+                        <span className={`font-serif text-3xl font-black ${colors[i % colors.length]} leading-none`}>
+                          {pick.num}
+                        </span>
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className={`text-[10px] uppercase tracking-wider font-sans font-bold ${tagColors[i % tagColors.length]}`}>
+                              {pick.category}
                             </span>
-                          )}
+                            {pick.likesCount > 0 && (
+                              <span className="inline-flex items-center gap-0.5 text-[10px] font-sans font-bold text-red-700 dark:text-red-400">
+                                <Heart className="w-2.5 h-2.5 fill-red-600 text-red-600" />
+                                <span>{pick.likesCount}</span>
+                              </span>
+                            )}
+                          </div>
+                          <h4 className="font-serif text-sm sm:text-base font-bold leading-snug group-hover:text-red-800 dark:group-hover:text-red-300 transition-colors">
+                            {pick.title}
+                          </h4>
+                          <p className="text-xs font-sans text-muted-foreground">
+                            {pick.author} &bull; {pick.date}
+                          </p>
                         </div>
-                        <h4 className="font-serif text-sm sm:text-base font-bold leading-snug group-hover:text-red-800 dark:group-hover:text-red-300 transition-colors">
-                          {pick.title}
-                        </h4>
-                        <p className="text-xs font-sans text-muted-foreground">
-                          {pick.author} &bull; {pick.date}
-                        </p>
-                      </div>
-                    </Link>
-                  </div>
-                );
-              })}
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
           {/* E-Newspaper Subscription Box */}
           <div className="border-2 border-foreground bg-[#0f233a] dark:bg-[#0c1828] text-stone-100 p-6 space-y-4 shadow-[4px_4px_0px_0px_rgba(28,24,21,1)]">
@@ -566,6 +566,7 @@ export default async function Home(props) {
                 Dispatch to My Inbox
               </button>
             </form>
+          </div>
           </div>
         </div>
       </div>
